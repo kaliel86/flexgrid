@@ -18,10 +18,6 @@ $columns: 12;
 [class*="grid-"] > * {
   flex: 0 0 auto;
   margin-left: $gutter;
-
-  /* inline-block fallback for IE9 generation */
-  display: inline-block;
-  vertical-align: top;
 }
 
 
