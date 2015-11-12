@@ -1,0 +1,46 @@
+// default variables
+$gutter: 1em;
+$number:4;
+$columns: 12;
+
+// common classes
+// remember to have :
+// * {
+//      box-sizing: border-box;
+//   }
+[class*="grid-"] {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin-left: -($gutter);
+}
+
+[class*="grid-"] > * {
+  flex: 0 0 auto;
+  margin-left: $gutter;
+
+  /* inline-block fallback for IE9 generation */
+  display: inline-block;
+  vertical-align: top;
+}
+
+
+//mixin for the classic grid
+@mixin grid($number:$number, $gutter:$gutter) {
+  & > * {
+    width: calc(100% * 1 / #{$number} - #{$gutter});
+  }
+  & > .flexitem-double {
+    width: calc(100% * 2 / #{$number} - #{$gutter});
+  }
+  & > .flexitem-first {
+    order: -1;
+  }
+}
+
+// loop creating classes for the classic grid
+@for $i from 1 to $columns {
+  .grid-#{$i} {
+    @include grid($i);
+  }
+}
