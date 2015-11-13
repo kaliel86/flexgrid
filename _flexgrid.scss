@@ -1,7 +1,11 @@
 // default variables
-$gutter: 1em;
+$gutter: 1rem;
 $number:4;
 $columns: 12;
+
+$s-screen: 768px;
+$m-screen: 1024px;
+
 
 // common classes
 // remember to have :
@@ -18,6 +22,10 @@ $columns: 12;
 [class*="grid-"] > * {
   flex: 0 0 auto;
   margin-left: $gutter;
+
+  /* inline-block fallback for IE9 generation */
+  display: inline-block;
+  vertical-align: top;
 }
 
 
@@ -26,17 +34,33 @@ $columns: 12;
   & > * {
     width: calc(100% * 1 / #{$number} - #{$gutter});
   }
-  & > .push-double {
+  & > .flexitem-double {
     width: calc(100% * 2 / #{$number} - #{$gutter});
   }
-  & > .push-first {
+  & > .flexitem-first {
     order: -1;
   }
 }
 
 // loop creating classes for the classic grid
 @for $i from 1 to $columns {
-  .grid-#{$i} {
+  [class*="grid-#{$i}"] {
     @include grid($i);
+  }
+}
+
+@media (max-width: $s-screen) {
+  @for $i from 1 to $columns {
+    [class*="-s-#{$i}"] > * {
+      width: calc(100% * 1 / #{$i} - #{$gutter});
+    }
+  }
+}
+
+@media (min-width: $s-screen +1 ) and (max-width: $m-screen) {
+  @for $i from 1 to $columns {
+    [class*="-m-#{$i}"] > * {
+      width: calc(100% * 1 / #{$i} - #{$gutter});
+    }
   }
 }
